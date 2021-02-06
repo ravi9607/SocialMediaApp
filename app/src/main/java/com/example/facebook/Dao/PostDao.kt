@@ -18,14 +18,15 @@ class PostDao {
     val postCollections = db.collection("posts")
     val auth = Firebase.auth
 
-    fun addPost(text: String) {
+    fun addPost(text: String, mSelectedImageFileUri: String) {
         GlobalScope.launch {
             val currentUserId = auth.currentUser!!.uid
             val userDao = UserDao()
             val user = userDao.getUserById(currentUserId).await().toObject(User::class.java)!!
 
             val currentTime = System.currentTimeMillis()
-            val post = Post(text, user, currentTime)
+            val uploadImage= mSelectedImageFileUri
+            val post = Post(text, user, currentTime, uploadImage)
             postCollections.document().set(post)
         }
     }

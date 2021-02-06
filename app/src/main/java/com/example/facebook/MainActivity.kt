@@ -26,11 +26,13 @@ class MainActivity : AppCompatActivity(), IPostAdapter {
 
     private lateinit var postDao: PostDao
     private lateinit var adapter: PostAdapter
-//    private lateinit var auth: FirebaseAuth
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        auth=Firebase.auth
 
         floatbtn.setOnClickListener{
             val createpost = Intent(this, CreatePost::class.java)
@@ -91,12 +93,16 @@ class MainActivity : AppCompatActivity(), IPostAdapter {
 //                    }
                     //Toast.makeText(applicationContext,"clicked yes", Toast.LENGTH_LONG).show()
 
-                    //progressBar.visibility = View.VISIBLE
-                    FirebaseAuth.getInstance().signOut();
+                    
+                    Firebase.auth.signOut();
                     val mainActivityIntent = Intent(this, SignInActivity::class.java)
                     startActivity(mainActivityIntent)
-                    //progressBar.visibility = View.GONE
                     finish()
+
+//                    auth.signOut();
+//                    val intent = Intent(this, SignInActivity::class.java)
+//                    mainActivityIntent.flags=Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+//                    startActivity(intent)
                 }
                 builder.setNegativeButton("No") { dialogInterface, which ->
                     //Toast.makeText(applicationContext,"clicked No", Toast.LENGTH_LONG).show()
