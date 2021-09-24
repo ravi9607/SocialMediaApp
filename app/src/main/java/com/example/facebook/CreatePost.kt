@@ -26,7 +26,7 @@ class CreatePost : AppCompatActivity()  {
 
     private var mSelectedImageFileUri: Uri?=null
     private lateinit var auth: FirebaseAuth
-    private lateinit var downloadUrl:String
+    private  var downloadUrl:String?=null
 
     private lateinit var postDao: PostDao
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,8 +38,9 @@ class CreatePost : AppCompatActivity()  {
         postDao=PostDao()
         postButton.setOnClickListener {
             val input = postInput.text.toString()
-            if(input.isNotEmpty()  && downloadUrl!= null){
-                postDao.addPost(input, downloadUrl)
+            if(input.isNotEmpty() && downloadUrl?.isNotEmpty() == true){
+                Toast.makeText(this, downloadUrl, Toast.LENGTH_SHORT).show()
+                postDao.addPost(input, downloadUrl!!)
                 finish()
             }
             else{
@@ -113,7 +114,7 @@ class CreatePost : AppCompatActivity()  {
         }).addOnCompleteListener { task ->
             if (task.isSuccessful){
                 Log.e("Done uploading " , task.result.toString())
-                Toast.makeText(this, "${task.result.toString()}", Toast.LENGTH_SHORT).show()
+
                 downloadUrl=task.result.toString()
             }
 

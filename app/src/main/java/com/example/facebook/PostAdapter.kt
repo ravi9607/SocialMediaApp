@@ -28,6 +28,7 @@ class PostAdapter(options: FirestoreRecyclerOptions<Post>, val listener: IPostAd
         val userImage: ImageView = itemView.findViewById(R.id.userImage)
         val likeButton: ImageView = itemView.findViewById(R.id.likeButton)
         val imageView2: ImageView = itemView.findViewById(R.id.imageView2)
+        val deleteView: ImageView = itemView.findViewById(R.id.deleteView)
 
     }
 
@@ -35,6 +36,10 @@ class PostAdapter(options: FirestoreRecyclerOptions<Post>, val listener: IPostAd
         val viewHolder =  PostViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_view, parent, false))
         viewHolder.likeButton.setOnClickListener{
             listener.onLikeClicked(snapshots.getSnapshot(viewHolder.adapterPosition).id)
+        }
+
+        viewHolder.deleteView.setOnClickListener{
+            listener.deletePost(snapshots.getSnapshot(viewHolder.adapterPosition).id)
         }
         return viewHolder
     }
@@ -65,4 +70,5 @@ class PostAdapter(options: FirestoreRecyclerOptions<Post>, val listener: IPostAd
 }
 interface IPostAdapter {
     fun onLikeClicked(postId: String)
+    fun deletePost(postId: String)
 }

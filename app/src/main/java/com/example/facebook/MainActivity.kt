@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.facebook.Dao.PostDao
@@ -70,6 +71,9 @@ class MainActivity : AppCompatActivity(), IPostAdapter {
         postDao.updateLikes(postId)
     }
 
+    override fun deletePost(postId: String) {
+        Toast.makeText(this, "Deleted Clicked ... ", Toast.LENGTH_SHORT).show()
+    }
 
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
